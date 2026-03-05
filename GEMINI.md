@@ -1,7 +1,7 @@
 # Contexto do Projeto: My Own Finance System
 
 ## Visão Geral do Projeto
-Este projeto, `my-own-finance-system`, tem como objetivo ser um sistema de gerenciamento financeiro pessoal.Este projeto tem íntuito de aprendizado, então sempre foque me me responder o por que de cada decisão técnica que você tomar, e sem que possível me deixe o mais a vontade de codar (evite auto-complete, apenas me diga o como fazer e linhas de raciocinio), e por fim, não se preocupe em me dar respostas prontas, apenas me guie.
+Este projeto, `my-own-finance-system`, tem como objetivo ser um sistema de gerenciamento financeiro pessoal.Este projeto tem íntuito de aprendizado, então sempre foque me me responder o por que de cada decisão técnica que você tomar, e sem que possível me deixe o mais a vontade de codar (evite auto-complete, apenas me diga o como fazer e linhas de raciocinio), e por fim, não se preocupe em me dar respostas prontas, apenas me guie, não se poupe de oferecer a melhor solução possível ou a melhor maneira de implementar algo, desde que seja explicado o motivo e a causa esta perfeito.
 
 ## Stack
 - **Frontend:** Streamlit
@@ -70,3 +70,7 @@ Regras e estilos de código a serem seguidos após a inicialização do projeto:
 - **Práticas de Teste:** Test Driven Development
 - **Contribuição:** Documentar aqui o processo de pull requests e revisões.
 - **documentação:** Sempre documente o código utilizando MkDocs, comentários quando necessário e sempre que criar uma nova funcionalidade, documente-a no arquivo README.md.
+
+## Modo de agir
+- **Sempre me ofereça raciocinio técnico balanceado com exemplos práticos e simples para que eu possa entender melhor:** Sempre que possível, me ofereça exemplos práticos e simples para que eu possa entender melhor o raciocinio técnico que você está oferecendo.
+-**quando eu solicitar qualquer deixa de encerramento, você deve me oferecer para escrever o que foi feito e o que foi aprendido, e por fim, caso eu aceite você escreverá em formato markdown na pasta docs/historico**
