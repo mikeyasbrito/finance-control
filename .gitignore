@@ -209,3 +209,8 @@ __marimo__/
 # System Docs and Agents
 docs/
 .agent/
+
+# Local Databases
+*.db
+*.sqlite
+*.sqlite3
