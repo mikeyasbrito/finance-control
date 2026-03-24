@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from pydantic import validate_email
-
+from zxcvbn import zxcvbn
+from modules.users.core.interfaces.cryptography import IPasswordHasher
 
 special_characters_set = set("!@#$%^&*()_+-=[]{}|;:,.<>?")
 
@@ -15,27 +16,21 @@ class InvalidEmailException(ExceptionDomain):
 class Password:
     value: str
 
-    def __post_init__(self):
-
-        self._validate_complexity()
-
-    def _validate_complexity(self):
-
-        if len(self.value) < 12:
-            raise ExceptionDomain("Password must contain 12 or more charactere")
-
-        if not any(char.islower() for char in self.value):
-            raise ExceptionDomain("Password must contain at least one lowercase letter")
-
-        if not any(char.isdigit() for char in self.value):
-            raise ExceptionDomain("Password must contain at least one number")
-
-        if not any(char in special_characters_set for char in self.value):
-            raise ExceptionDomain("Password must contain at least one special charactere")
-
-        if not any(char.isupper() for char in self.value):
-            raise ExceptionDomain("Password must contain at least one uppercase letter")
+    @classmethod
+    def create(cls, plain_password: str, hasher: IPasswordHasher) -> "Password":
+        # Mantemos o limite mínimo de 12 como camada extra de segurança
+        if len(plain_password) < 12:
+            raise ExceptionDomain("Password must contain 12 or more characters")
+            
+        resultado = zxcvbn(plain_password)
+        score = resultado.get('score', 0)
         
+        # Um score 3 ou 4 é considerado forte/muito forte
+        if score < 3:
+            raise ExceptionDomain("Sua senha é muito fraca. Tente uma frase ou palavras aleatórias.")        
+            
+        hashed_value = hasher.hash(plain_password)
+        return cls(value=hashed_value)        
 
 
 

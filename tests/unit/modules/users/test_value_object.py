@@ -1,51 +1,42 @@
 import pytest
 from modules.users.core.entities.value_objects import Email, Password, ExceptionDomain, InvalidEmailException
+from modules.users.core.interfaces.cryptography import IPasswordHasher
+
+class MockHasher(IPasswordHasher):
+    def hash(self, password: str) -> str:
+        return f"hashed_{password}"
+        
+    def verify(self, plain: str, hashed: str) -> bool:
+        return hashed == f"hashed_{plain}"
 
 """
     TESTES DE SENHA
 """
-def test_password_should_be_created_with_valid_data():
+def test_password_should_be_created_with_strong_data():
     """
-    Objetivo: Garantir que a entidade Password possa ser instanciada com dados válidos.
+    Objetivo: Garantir que a entidade Password possa ser instanciada com uma senha de alta entropia.
     """
-    # Act & Assert (Se não lançar exceção, o teste passa)
-    password = Password(value="Senha@Forte123")
-    assert password.value == "Senha@Forte123"
+    # Act & Assert
+    password = Password.create(plain_password="MeuCachorroVesteAzul!", hasher=MockHasher())
+    assert password.value == "hashed_MeuCachorroVesteAzul!"
 
 def test_password_should_raise_error_when_password_is_too_short():
     """
     Objetivo: Garantir que a entidade Password não possa ser instanciada com uma senha muito curta.
     """
-    with pytest.raises(ExceptionDomain, match="12 or more charactere"):
-        Password(value="curta@1B")
+    with pytest.raises(ExceptionDomain, match="12 or more characters"):
+        Password.create(plain_password="Senha123!", hasher=MockHasher())
 
-def test_password_should_raise_error_when_password_does_not_contain_uppercase_letter():
+def test_password_should_raise_error_when_password_is_weak():
     """
-    Objetivo: Garantir que a entidade Password não possa ser instanciada com uma senha que não contém uma letra maiúscula.
+    Objetivo: Garantir que senhas longas, porém previsíveis, sejam bloqueadas pelo zxcvbn.
     """
-    with pytest.raises(ExceptionDomain, match="uppercase letter"):
-        Password(value="senasem_maiuscula@123")
+    with pytest.raises(ExceptionDomain, match="Sua senha é muito fraca"):
+        Password.create(plain_password="1234567890123", hasher=MockHasher())
+    
+    with pytest.raises(ExceptionDomain, match="Sua senha é muito fraca"):
+        Password.create(plain_password="passwordpassword", hasher=MockHasher())
 
-def test_password_should_raise_error_when_password_does_not_contain_lowercase_letter():
-    """
-    Objetivo: Garantir que a entidade Password não possa ser instanciada com uma senha que não contém uma letra minúscula.
-    """
-    with pytest.raises(ExceptionDomain, match="lowercase letter"):
-        Password(value="SENHASEM_MINUSCULA@123")
-
-def test_password_should_raise_error_when_password_does_not_contain_number():
-    """
-    Objetivo: Garantir que a entidade Password não possa ser instanciada com uma senha que não contém um número.
-    """
-    with pytest.raises(ExceptionDomain, match="at least one number"):
-        Password(value="SenhaSemNumero@Aqui")
-
-def test_password_should_raise_error_when_password_does_not_contain_special_character():
-    """
-    Objetivo: Garantir que a entidade Password não possa ser instanciada com uma senha que não contém um caractere especial.
-    """
-    with pytest.raises(ExceptionDomain, match="special charactere"):
-        Password(value="SenhaSemEspecial123")
 
 
 """

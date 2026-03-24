@@ -1,37 +1,45 @@
 [project]
-name = "my-own-finance-system"
+name = "finance-system"
 version = "0.1.0"
-description = ""
+description = "my own finance system"
 authors = [
-    {name = "mikeyas", email = "mikeyas@example.com"}
+    {name = "Mikeyas",email = "mikeyas.lira@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 dependencies = [
-    "fastapi (>=0.115.10,<0.116.0)",
-    "sqlalchemy (>=2.0.38,<3.0.0)",
-    "alembic (>=1.14.1,<2.0.0)",
-    "pydantic[email] (>=2.12.5,<3.0.0)",
-    "python-jose[cryptography] (>=3.3.0,<4.0.0)",
-    "passlib[bcrypt] (>=1.7.4,<2.0.0)",
-    "python-multipart (>=0.0.20,<0.1.0)",
-    "psycopg2-binary (>=2.9.10,<3.0.0)",
-    "streamlit (>=1.42.2,<2.0.0)",
-    "plotly (>=6.0.0,<7.0.0)",
-    "pandas (>=2.2.3,<3.0.0)",
-    "python-dotenv (>=1.0.1,<2.0.0)"
+    "fastapi (>=0.135.1,<0.136.0)",
+    "sqlalchemy (>=2.0.48,<3.0.0)",
+    "psycopg2-binary (>=2.9.11,<3.0.0)",
+    "streamlit (>=1.55.0,<2.0.0)",
+    "alembic (>=1.18.4,<2.0.0)",
+    "python-jose (>=3.5.0,<4.0.0)",
+    "passlib (>=1.7.4,<2.0.0)",
+    "uvicorn (>=0.41.0,<0.42.0)",
+    "pydantic-settings (>=2.13.1,<3.0.0)",
+    "cryptography (>=46.0.5,<47.0.0)",
+    "bcrypt (>=5.0.0,<6.0.0)",
+    "zxcvbn (>=4.5.0,<5.0.0)",
+    "email-validator (>=2.3.0,<3.0.0)",
+    "pyjwt (>=2.12.1,<3.0.0)",
+    "pdfplumber (>=0.11.9,<0.12.0)",
+    "pytesseract (>=0.3.13,<0.4.0)",
+    "pillow (>=12.1.1,<13.0.0)",
+    "httpx (>=0.28.1,<0.29.0)"
 ]
 
-
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.3.4"
-pytest-cov = "^6.0.0"
-black = "^25.1.0"
-flake8 = "^7.1.2"
-isort = "^6.0.0"
-mypy = "^1.15.0"
-httpx = "^0.28.1"
+pytest = "^8.0.0"
+pytest-cov = "^7.0.0"
+black = "^26.1.0"
+flake8 = "^7.3.0"
 mkdocs = "^1.6.1"
+
+[tool.black]
+line-length = 88
+
+[tool.coverage.run]
+source = []
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
@@ -41,3 +49,4 @@ addopts = "--cov=src --cov-report=term-missing"
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
